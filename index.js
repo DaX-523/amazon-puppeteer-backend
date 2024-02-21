@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const puppeteer = require("puppeteer");
 const app = express();
+const userAgent = require("user-agents");
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
@@ -16,6 +17,8 @@ app.get("/get-details/:keyword", async (req, res, next) => {
       ignoreHTTPSErrors: true,
     });
     const page = await browser.newPage();
+    console.log(userAgent.random().toString());
+    await page.setUserAgent(userAgent.random().toString());
     // await page.waitForTimeout((Math.floor(Math.random() * 12) + 5) * 1000);
     await page.goto("https://www.amazon.com");
     // await page.goto("https://www.amazon.com/s?k=" + keyword);
